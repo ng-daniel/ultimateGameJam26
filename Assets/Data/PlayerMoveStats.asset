@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerMoveStats
   m_EditorClassIdentifier: Assembly-CSharp::MovementStats
   WalkSpeed: 10
-  WalkSpeedAccel: 50
-  AirborneAccelMultiplier: 0.3
+  WalkSpeedAccel: 100
+  AirborneAccelMultiplier: 0.15
