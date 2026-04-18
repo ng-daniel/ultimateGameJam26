@@ -61,7 +61,7 @@ namespace Assets.Scripts.Player
             }
             else
             {
-                movementBehavior.MoveRegular(moveInput);
+                movementBehavior.MoveRegular(moveInput, jumpBehavior.IsGrounded());
             }
         }
 

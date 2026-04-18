@@ -9,6 +9,7 @@ namespace Assets.Scripts.Player
     /// </summary>
     public class MovementBehavior : MonoBehaviour
     {
+        Vector2 lastInput;
         Rigidbody rb;
         [SerializeField] MovementStats moveStats;
         [SerializeField] MovementStats debugMoveStats;
@@ -17,9 +18,9 @@ namespace Assets.Scripts.Player
         {
             rb = GetComponent<Rigidbody>();
         }
-        public void MoveRegular(Vector2 rawInput)
+        public void MoveRegular(Vector2 rawInput, bool isGrounded)
         {
-            Move(rawInput, moveStats);
+            Move(rawInput, moveStats, isGrounded);
         }
         public void MoveDebug(Vector2 rawInput)
         {
@@ -31,7 +32,8 @@ namespace Assets.Scripts.Player
         /// </summary>
         /// <param name="rawInput">The input vector representing the desired movement direction.</param>
         /// <param name="moveStats">The movement stats to use for this movement.</param>
-        void Move(Vector2 rawInput, MovementStats moveStats)
+        /// <param name="isGrounded">Indicates whether the player is grounded.</param>
+        void Move(Vector2 rawInput, MovementStats moveStats, bool isGrounded = true)
         {   
             const float inputThreshold = 0.01f;
             float dt = Time.fixedDeltaTime;
@@ -54,6 +56,11 @@ namespace Assets.Scripts.Player
 
             float acceleration = moveStats.WalkSpeedAccel;
             float deceleration = moveStats.WalkSpeedAccel * 1.35f;
+            if (!isGrounded)
+            {
+                acceleration *= moveStats.AirborneAccelMultiplier;
+                deceleration = 0f; // No deceleration in the air, only acceleration towards the input direction
+            }
             float directionChangeBoost = 2.0f;
 
             if (!hasInput)

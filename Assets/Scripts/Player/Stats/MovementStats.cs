@@ -5,4 +5,5 @@ public class MovementStats : ScriptableObject
 {
     [SerializeField] public float WalkSpeed;
     [SerializeField] public float WalkSpeedAccel;
+    [SerializeField] public float AirborneAccelMultiplier;
 }
