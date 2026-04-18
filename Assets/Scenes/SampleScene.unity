@@ -408,6 +408,7 @@ GameObject:
   - component: {fileID: 505323639}
   - component: {fileID: 505323638}
   - component: {fileID: 505323637}
+  - component: {fileID: 505323641}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -502,12 +503,25 @@ Transform:
   m_GameObject: {fileID: 505323636}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.51, y: 11.505, z: 1.3017}
-  m_LocalScale: {x: 4.683172, y: 3.159096, z: 2.6908948}
+  m_LocalPosition: {x: -0.3915, y: 15.388, z: -5.9434}
+  m_LocalScale: {x: 12.919935, y: 10.925102, z: 17.181095}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &505323641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505323636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0927695c0be7a6c4c85f3b2e41f10c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DirtySurfaceBehavior
+  maxDirtiness: 1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5452733635317100, guid: 63d152ebe28337049a9ca99ff1cdfcc4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.44
+      value: 6.14
       objectReference: {fileID: 0}
     - target: {fileID: 5452733635317100, guid: 63d152ebe28337049a9ca99ff1cdfcc4, type: 3}
       propertyPath: m_LocalPosition.z
