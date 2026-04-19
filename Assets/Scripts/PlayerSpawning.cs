@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerSpawning : MonoBehaviour
 {
+    GameManager gameManager;
     [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject playerInstance; // Reference to the player instance in the scene
     [SerializeField] Transform spawnPoint;
@@ -10,6 +11,8 @@ public class PlayerSpawning : MonoBehaviour
     private void Start()
     {
         InitialPlayerSpawn();
+        gameManager = FindFirstObjectByType<GameManager>();
+        gameManager.StartGame();
     }
 
     void InitialPlayerSpawn()

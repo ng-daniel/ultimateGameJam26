@@ -6,7 +6,7 @@ public class DirtyRoomManager : MonoBehaviour
     DirtySurfaceBehavior[] dirtySurfaces;
     [SerializeField] float totalCleanedAmount = 0f; // range between 0 and totalSizeFactor
     [SerializeField] float totalSizeFactor = 0f;
-    private void Awake()
+    private void Start()
     {
         dirtySurfaces = transform.GetComponentsInChildren<DirtySurfaceBehavior>();
         if (dirtySurfaces.Length == 0)

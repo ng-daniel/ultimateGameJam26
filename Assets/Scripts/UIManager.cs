@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] string timeText;
     [SerializeField] TMP_Text gameTimeText;
     [SerializeField] TMP_Text finalTimeText;
+    [SerializeField] string levelNameText;
+    [SerializeField] TMP_Text gameLevelNameText;
+    [SerializeField] TMP_Text finalLevelNameText;
 
     public void ShowWinScreen()
     {
@@ -55,6 +58,20 @@ public class UIManager : MonoBehaviour
             {
                 finalTimeText.text = timeText;
             }
+        }
+    }
+
+    public void SetLevelName(string levelName)
+    {
+        levelNameText = levelName;
+        
+        if (gameLevelNameText != null)
+        {
+            gameLevelNameText.text = levelNameText;
+        }
+        if (finalLevelNameText != null)
+        {
+            finalLevelNameText.text = levelNameText;
         }
     }
 }
