@@ -45,4 +45,13 @@ public class DirtyRoomManager : MonoBehaviour
         }
         return totalCleanedAmount / totalSizeFactor;
     }
+
+    /// <summary>
+    /// Checks if the room is fully cleaned within a certain threshold. Returns 1 if fully cleaned, 0 otherwise.
+    /// </summary>
+    /// <returns>True if fully cleaned, false otherwise.</returns>
+    public bool CheckIfFullyCleaned()
+    {
+        return GetCleanlinessPercentage() >= 0.99f; // Consider it fully clean if it's 99% or more clean to account for floating point imprecision
+    }
 }

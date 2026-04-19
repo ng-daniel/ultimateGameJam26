@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SpriteBillboard : MonoBehaviour
 {
-    Camera mainCamera;
+    Camera mainCamera; 
 
     void Start()
     {
