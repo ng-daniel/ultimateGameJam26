@@ -52,6 +52,6 @@ public class DirtyRoomManager : MonoBehaviour
     /// <returns>True if fully cleaned, false otherwise.</returns>
     public bool CheckIfFullyCleaned()
     {
-        return GetCleanlinessPercentage() >= 0.99f; // Consider it fully clean if it's 99% or more clean to account for floating point imprecision
+        return GetCleanlinessPercentage() >= 0.9999f; // Consider it fully clean if it's 99% or more clean to account for floating point imprecision
     }
 }

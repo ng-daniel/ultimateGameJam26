@@ -35,7 +35,7 @@ namespace Assets.Scripts.Player
             playerController = FindFirstObjectByType<PlayerController>();
             if (playerController == null)
             {
-                Debug.LogError("PlayerController not found in the scene.");
+                Debug.LogError("PlayerController not found at start of scene.");
             }
         }
 
@@ -56,6 +56,12 @@ namespace Assets.Scripts.Player
 
         void Update()
         {
+            if (playerController == null)
+            {
+                playerController = FindFirstObjectByType<PlayerController>();
+                return;
+            }
+            
             Vector2 lookValue = lookAction.ReadValue<Vector2>();
             if (playerController != null)
             {
@@ -64,6 +70,11 @@ namespace Assets.Scripts.Player
         }
         void FixedUpdate()
         {
+            if (playerController == null)
+            {
+                return;
+            }
+            
             Vector2 moveValue = moveAction.ReadValue<Vector2>();
             if (playerController != null)
             {
@@ -93,7 +104,7 @@ namespace Assets.Scripts.Player
         }
         void OnJumpStart(InputAction.CallbackContext context)
         {
-            if (!playerController.GetJumpBehavior().TryStartJump())
+            if (playerController != null && !playerController.GetJumpBehavior().TryStartJump())
             {
                 Debug.Log("Jump failed: player is not grounded.");
             }
@@ -101,17 +112,26 @@ namespace Assets.Scripts.Player
 
         void OnFlyUp(InputAction.CallbackContext context)
         {
-            playerController.TryFlyIfDebug(true);
+            if (playerController != null)
+            {
+                playerController.TryFlyIfDebug(true);
+            }
         }
 
         void OnFlyDown(InputAction.CallbackContext context)
         {
-            playerController.TryFlyIfDebug(false);
+            if (playerController != null)
+            {
+                playerController.TryFlyIfDebug(false);
+            }
         }
 
         void OnInteractStart(InputAction.CallbackContext context)
         {
-            playerController.ToggleDebugMode();
+            if (playerController != null)
+            {
+                playerController.ToggleDebugMode();
+            }
         }
 
         void OnLeftClickRelease(InputAction.CallbackContext context)
