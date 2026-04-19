@@ -47,19 +47,22 @@ public class RoomLoader : MonoBehaviour
 
     public void TryBackToMainMenu()
     {
+        Debug.Log("Returning to main menu...");
+        SceneManager.LoadScene("TitleScene");
+
         if (gameManager != null && gameManager.IsGameOver())
         {
-            Debug.Log("Returning to main menu...");
-            SceneManager.LoadScene("TitleScene");
+            // where it used to be    
         }
     }
 
     public void TryRestartLevel()
     {
+        Debug.Log("Restarting level...");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         if (gameManager != null && gameManager.IsGameOver())
         {
-            Debug.Log("Restarting level...");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            // where it used to be    
         }   
     }
 }

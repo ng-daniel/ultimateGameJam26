@@ -248,7 +248,7 @@ MonoBehaviour:
   raycastRange: 2
   pullStrength: 10
   releasePushStrength: 10
-  cleanAmount: 1
+  cleanAmount: 2
 --- !u!114 &2794770874256847024
 MonoBehaviour:
   m_ObjectHideFlags: 0
