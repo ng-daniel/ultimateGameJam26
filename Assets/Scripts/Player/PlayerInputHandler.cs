@@ -15,12 +15,14 @@ namespace Assets.Scripts.Player
         InputAction jumpAction;
         InputAction interactAction;
         InputAction crouchAction;
-
         InputAction lmbAction;
         InputAction rmbAction;
+        InputAction select1;
+        InputAction select2;
 
 
         PlayerController playerController;
+        RoomLoader roomLoader;
 
         private void Awake()
         {
@@ -31,11 +33,18 @@ namespace Assets.Scripts.Player
             crouchAction = InputSystem.actions.FindAction("Crouch");
             lmbAction = InputSystem.actions.FindAction("Attack");
             rmbAction = InputSystem.actions.FindAction("SecondaryAttack");
-
+            select1 = InputSystem.actions.FindAction("Select1");
+            select2 = InputSystem.actions.FindAction("Select2");
+            
             playerController = FindFirstObjectByType<PlayerController>();
             if (playerController == null)
             {
                 Debug.LogError("PlayerController not found at start of scene.");
+            }
+            roomLoader = FindFirstObjectByType<RoomLoader>();
+            if (roomLoader == null)
+            {
+                Debug.LogError("RoomLoader not found at start of scene.");
             }
         }
 
@@ -45,6 +54,8 @@ namespace Assets.Scripts.Player
             interactAction.started += OnInteractStart;
             lmbAction.canceled += OnLeftClickRelease;
             rmbAction.started += OnRightClick;
+            select1.started += OnSelect1;
+            select2.started += OnSelect2;
         }
         void OnDisable()
         {
@@ -52,6 +63,8 @@ namespace Assets.Scripts.Player
             interactAction.started -= OnInteractStart;
             lmbAction.canceled -= OnLeftClickRelease;
             rmbAction.started -= OnRightClick;
+            select1.started -= OnSelect1;
+            select2.started -= OnSelect2;
         }
 
         void Update()
@@ -128,10 +141,12 @@ namespace Assets.Scripts.Player
 
         void OnInteractStart(InputAction.CallbackContext context)
         {
-            if (playerController != null)
-            {
-                playerController.ToggleDebugMode();
-            }
+            // no more debug toggle!!!!!
+            
+            // if (playerController != null)
+            // {
+            //     playerController.ToggleDebugMode();
+            // }
         }
 
         void OnLeftClickRelease(InputAction.CallbackContext context)
@@ -147,6 +162,22 @@ namespace Assets.Scripts.Player
             if (playerController != null)
             {
                 playerController.TryGrenadeSecondary();
+            }
+        }
+
+        void OnSelect1(InputAction.CallbackContext context)
+        {
+            if (roomLoader != null)
+            {
+                roomLoader.TryRestartLevel();
+            }
+        }
+
+        void OnSelect2(InputAction.CallbackContext context)
+        {
+            if (roomLoader != null)
+            {
+                roomLoader.TryBackToMainMenu();
             }
         }
     }
