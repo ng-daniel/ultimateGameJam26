@@ -4,8 +4,8 @@ using UnityEngine;
 public class DirtyRoomManager : MonoBehaviour
 {
     DirtySurfaceBehavior[] dirtySurfaces;
-    float totalCleanedAmount = 0f; // range between 0 and totalSizeFactor
-    float totalSizeFactor = 0f;
+    [SerializeField] float totalCleanedAmount = 0f; // range between 0 and totalSizeFactor
+    [SerializeField] float totalSizeFactor = 0f;
     private void Awake()
     {
         dirtySurfaces = transform.GetComponentsInChildren<DirtySurfaceBehavior>();
@@ -16,7 +16,7 @@ public class DirtyRoomManager : MonoBehaviour
 
         foreach (DirtySurfaceBehavior surface in dirtySurfaces)
         {
-            surface.SetDirtiness(1f);
+            surface.SetDirtinessProportion(1f); // Start fully dirty
             totalSizeFactor += surface.GetSizeFactor();
             surface.SetManager(this);
         }
