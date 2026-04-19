@@ -9,6 +9,7 @@ public class DirtySurfaceBehavior : MonoBehaviour
     float maxDirtiness;
     [SerializeField] float dirtinessProportion;
     float cleanThreshold = 0.1f; // The threshold below which we consider the surface clean
+    bool isClean = false;
 
     private void Awake()
     {
@@ -78,15 +79,19 @@ public class DirtySurfaceBehavior : MonoBehaviour
     {
         float remainder = dirtiness;
         SetDirtiness(0);
-        manager.OnSurfaceCleaned(remainder);
+        isClean = true;
+        if (manager != null)
+        {
+            manager.OnSurfaceCleaned(remainder);
+        }
     }
     public float GetSizeFactor()
     {
-        return Mathf.Log10(rend.bounds.size.magnitude);
+        return 1;
     }
     
     public bool IsDirty()
     {
-        return dirtinessProportion > cleanThreshold;
+        return !isClean;
     }
 }

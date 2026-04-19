@@ -43,7 +43,7 @@ namespace Assets.Scripts.Player
                 }
 
                 DirtySurfaceBehavior dirtySurface = nearbyObject.GetComponent<DirtySurfaceBehavior>();
-                if (dirtySurface != null)
+                if (dirtySurface != null && dirtySurface.IsDirty())
                 {
                     dirtySurface.CleanDirtSomeAmount(cleanAmount); // Adjust the amount as needed
                 }

@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     public void OnGameEnd()
     {
         gameEnded = true;
-        dirtyRoomManager.CleanAllSurfaces(); // Ensure all surfaces are fully clean at the end of the game
+        // dirtyRoomManager.CleanAllSurfaces(); // Ensure all surfaces are fully clean at the end of the game
         if (uiManager != null)
         {
             uiManager.ShowWinScreen();

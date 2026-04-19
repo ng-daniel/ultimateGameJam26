@@ -6,6 +6,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject winScreen;
     [SerializeField] GameObject playScreen;
     
+    [SerializeField] string percentageText;
+    [SerializeField] TMP_Text percentageTextUI;
+
     [SerializeField] string timeText;
     [SerializeField] TMP_Text gameTimeText;
     [SerializeField] TMP_Text finalTimeText;
@@ -72,6 +75,18 @@ public class UIManager : MonoBehaviour
         if (finalLevelNameText != null)
         {
             finalLevelNameText.text = levelNameText;
+        }
+    }
+
+    public void UpdatePercentageText(float percentage)
+    {
+        if (percentageTextUI != null)
+        {
+            percentageText = string.Format("{0:0.00}%", percentage * 100f);
+            if (percentageTextUI != null)
+            {
+                percentageTextUI.text = percentageText;
+            }
         }
     }
 }

@@ -3,13 +3,24 @@ using UnityEngine;
 
 public class DirtyRoomManager : MonoBehaviour
 {
-    DirtySurfaceBehavior[] dirtySurfaces;
+    UIManager uiManager;
+    [SerializeField] List<DirtySurfaceBehavior> dirtySurfaces;
     [SerializeField] float totalCleanedAmount = 0f; // range between 0 and totalSizeFactor
     [SerializeField] float totalSizeFactor = 0f;
+    int numCleanedSurfaces = 0;
+    void Awake()
+    {
+        uiManager = FindFirstObjectByType<UIManager>();
+        if (uiManager == null)
+        {
+            Debug.LogError("UIManager not found in the scene. Please make sure there is a UIManager in the scene.");
+        }
+    }
+    
     private void Start()
     {
-        dirtySurfaces = transform.GetComponentsInChildren<DirtySurfaceBehavior>();
-        if (dirtySurfaces.Length == 0)
+        dirtySurfaces = new List<DirtySurfaceBehavior>(transform.GetComponentsInChildren<DirtySurfaceBehavior>());
+        if (dirtySurfaces.Count == 0)
         {
             Debug.LogWarning("No dirty surfaces found in children of " + gameObject.name);
         }
@@ -52,6 +63,14 @@ public class DirtyRoomManager : MonoBehaviour
     /// <returns>True if fully cleaned, false otherwise.</returns>
     public bool CheckIfFullyCleaned()
     {
-        return GetCleanlinessPercentage() >= 0.9999f; // Consider it fully clean if it's 99% or more clean to account for floating point imprecision
+        return GetCleanlinessPercentage() >= 0.9999f;
+    }
+
+    public void Update()
+    {
+        if (uiManager != null)
+        {
+            uiManager.UpdatePercentageText(GetCleanlinessPercentage());
+        }
     }
 }
