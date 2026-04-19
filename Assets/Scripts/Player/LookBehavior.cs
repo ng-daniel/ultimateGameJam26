@@ -11,6 +11,7 @@ namespace Assets.Scripts.Player
     {
         Vector2 rotation;
         [SerializeField] float lookSensitivity = 0.25f;
+        Quaternion lastLookRotation;
 
         public void Start()
         {
@@ -27,7 +28,13 @@ namespace Assets.Scripts.Player
             Quaternion xRotation = Quaternion.Euler(0f, rotation.x, 0f);
             Quaternion yRotation = Quaternion.Euler(-rotation.y, 0f, 0f);
             Quaternion result = xRotation * yRotation;
+            lastLookRotation = result;
             return result;
+        }
+
+        public Quaternion GetLastLookRotation()
+        {
+            return lastLookRotation;
         }
     }
 }

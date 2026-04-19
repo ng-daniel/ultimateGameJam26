@@ -16,6 +16,10 @@ namespace Assets.Scripts.Player
         InputAction interactAction;
         InputAction crouchAction;
 
+        InputAction lmbAction;
+        InputAction rmbAction;
+
+
         PlayerController playerController;
 
         private void Awake()
@@ -25,6 +29,8 @@ namespace Assets.Scripts.Player
             jumpAction = InputSystem.actions.FindAction("Jump");
             interactAction = InputSystem.actions.FindAction("Interact");
             crouchAction = InputSystem.actions.FindAction("Crouch");
+            lmbAction = InputSystem.actions.FindAction("Attack");
+            rmbAction = InputSystem.actions.FindAction("SecondaryAttack");
 
             playerController = FindFirstObjectByType<PlayerController>();
             if (playerController == null)
@@ -37,11 +43,13 @@ namespace Assets.Scripts.Player
         {
             jumpAction.started += OnJumpStart;
             interactAction.started += OnInteractStart;
+            rmbAction.started += OnRightClick;
         }
         void OnDisable()
         {
             jumpAction.started -= OnJumpStart;
             interactAction.started -= OnInteractStart;
+            rmbAction.started -= OnRightClick;
         }
 
         void Update()
@@ -58,6 +66,12 @@ namespace Assets.Scripts.Player
             if (playerController != null)
             {
                 playerController.Move(moveValue);
+            }
+
+            bool leftMouseHeld = lmbAction.ReadValue<float>() > 0.1f;
+            if (leftMouseHeld && playerController != null)
+            {
+                playerController.TryVacuumPrimary();
             }
 
             bool jumping = jumpAction.ReadValue<float>() > 0.1f;
@@ -96,6 +110,13 @@ namespace Assets.Scripts.Player
         void OnInteractStart(InputAction.CallbackContext context)
         {
             playerController.ToggleDebugMode();
+        }
+        void OnRightClick(InputAction.CallbackContext context)        
+        {
+            if (playerController != null)
+            {
+                playerController.TryGrenadeSecondary();
+            }
         }
     }
 }

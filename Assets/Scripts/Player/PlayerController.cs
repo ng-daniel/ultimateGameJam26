@@ -22,6 +22,7 @@ namespace Assets.Scripts.Player
     [RequireComponent(typeof(LookBehavior))]
     [RequireComponent(typeof(MovementBehavior))]
     [RequireComponent(typeof(JumpBehavior))]
+    [RequireComponent(typeof(Vacuum))]
     public class PlayerController : MonoBehaviour
     {
         
@@ -31,6 +32,7 @@ namespace Assets.Scripts.Player
         LookBehavior lookBehavior;
         MovementBehavior movementBehavior;
         JumpBehavior jumpBehavior;
+        Vacuum vacuumBehavior;
         FPSCameraBehavior fpsCameraBehavior;
         bool debugMode = false;
 
@@ -42,6 +44,7 @@ namespace Assets.Scripts.Player
             lookBehavior = GetComponent<LookBehavior>();
             movementBehavior = GetComponent<MovementBehavior>();
             jumpBehavior = GetComponent<JumpBehavior>();
+            vacuumBehavior = GetComponent<Vacuum>();
             fpsCameraBehavior = FindFirstObjectByType<FPSCameraBehavior>();
         }
 
@@ -109,6 +112,33 @@ namespace Assets.Scripts.Player
         public JumpBehavior GetJumpBehavior()
         {
             return jumpBehavior;
+        }
+
+        public Vacuum GetVacuumBehavior()
+        {
+            return vacuumBehavior;
+        }
+
+        public void TryVacuumPrimary()
+        {
+            if (vacuumBehavior == null)
+            {
+                return;
+            }
+
+            Quaternion actionRotation = lookBehavior.GetLastLookRotation();
+            vacuumBehavior.TrySuckDirtySurface(actionRotation);
+        }
+
+        public void TryGrenadeSecondary()
+        {
+            // if (vacuumBehavior == null)
+            // {
+            //     return;
+            // }
+
+            // Quaternion actionRotation = fpsCameraBehavior != null ? fpsCameraBehavior.transform.rotation : transform.rotation;
+            // vacuumBehavior.TrySuckDirtySurface(actionRotation);
         }
 
         public void ToggleDebugMode()

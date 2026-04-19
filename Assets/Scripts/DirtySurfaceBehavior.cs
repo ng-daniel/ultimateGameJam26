@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class DirtySurfaceBehavior : MonoBehaviour
 {
-    
     DirtyRoomManager manager;
     Renderer rend;
     Material mat;
