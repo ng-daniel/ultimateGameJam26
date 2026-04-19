@@ -2085,7 +2085,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '`ENTER'' to restart the room, `BACKSPACE'' to return to menu.'
+  m_text: '`R'' to restart the room, `BACKSPACE'' to return to menu.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 381a8b61ca0b2c9469bd21a23485fca2, type: 2}
   m_sharedMaterial: {fileID: -1167916608792244137, guid: 381a8b61ca0b2c9469bd21a23485fca2, type: 2}
