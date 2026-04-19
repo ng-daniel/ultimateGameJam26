@@ -95,6 +95,10 @@ namespace Assets.Scripts.Player
             }
 
             bool leftMouseHeld = lmbAction.ReadValue<float>() > 0.1f;
+            if (playerController != null)
+            {
+                 playerController.GetVacuumBehavior().SuckVisual(leftMouseHeld);
+            }
             if (leftMouseHeld && playerController != null)
             {
                 playerController.TryVacuumPrimary();
@@ -151,6 +155,7 @@ namespace Assets.Scripts.Player
 
         void OnLeftClickRelease(InputAction.CallbackContext context)
         {
+            Debug.Log("LEFT: Left click released");
             if (playerController != null)
             {
                 playerController.TryReleaseVacuumPrimary();

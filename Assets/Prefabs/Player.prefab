@@ -245,8 +245,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a1147fd258bc649b78998e93ad85b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Player.Vacuum
-  raycastRange: 2
+  raycastRange: 2.5
   pullStrength: 10
+  releaseMinimumVelocity: 6
   releasePushStrength: 10
   cleanAmount: 2
 --- !u!114 &2794770874256847024

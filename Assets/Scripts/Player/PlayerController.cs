@@ -129,7 +129,10 @@ namespace Assets.Scripts.Player
             }
 
             Quaternion actionRotation = lookBehavior.GetLastLookRotation();
-            vacuumBehavior.TrySuckDirtySurface(actionRotation);
+            if (vacuumBehavior != null)
+            {
+                vacuumBehavior.TrySuckDirtySurface(actionRotation);
+            }
         }
 
         public void TryReleaseVacuumPrimary()

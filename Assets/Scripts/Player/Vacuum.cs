@@ -7,14 +7,27 @@ namespace Assets.Scripts.Player
         Rigidbody rb;
         [SerializeField] float raycastRange;
         [SerializeField] float pullStrength;
+        [SerializeField] float releaseMinimumVelocity;
         [SerializeField] float releasePushStrength;
         [SerializeField] float cleanAmount;
 
+        Animator vacuumUIAnim;
+
         bool sucking = false;
+        bool holding = false;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
+            vacuumUIAnim = GameObject.FindGameObjectWithTag("VacuumUIImage").GetComponent<Animator>();
+        }
+
+        public void SuckVisual(bool active){
+            if (vacuumUIAnim == null)
+            {
+                return;
+            }
+            vacuumUIAnim.SetBool("sucking", active);
         }
 
         /// <summary>
@@ -75,7 +88,14 @@ namespace Assets.Scripts.Player
             }
 
             sucking = false;
-            Vector3 pushDirection = transform.forward;
+            Vector3 pushDirection = transform.forward.normalized;
+
+            float currentForwardSpeed = Vector3.Dot(rb.linearVelocity, pushDirection);
+            if (currentForwardSpeed < releaseMinimumVelocity)
+            {
+                rb.linearVelocity += pushDirection * (releaseMinimumVelocity - currentForwardSpeed);
+            }
+
             rb.AddForce(pushDirection * releasePushStrength, ForceMode.Impulse);
         }
     }
