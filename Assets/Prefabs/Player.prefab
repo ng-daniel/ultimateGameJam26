@@ -248,7 +248,7 @@ MonoBehaviour:
   raycastRange: 2.5
   pullStrength: 10
   releaseMinimumVelocity: 6
-  releasePushStrength: 10
+  releasePushStrength: 6
   cleanAmount: 2
 --- !u!114 &2794770874256847024
 MonoBehaviour:

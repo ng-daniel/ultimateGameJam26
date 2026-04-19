@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MovementStats
   WalkSpeed: 5
   WalkSpeedAccel: 75
-  AirborneAccelMultiplier: 0.3
+  AirborneAccelMultiplier: 0.45
