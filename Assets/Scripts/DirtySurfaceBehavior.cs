@@ -6,6 +6,7 @@ public class DirtySurfaceBehavior : MonoBehaviour
     Renderer rend;
     Material mat;
     float dirtiness;
+    float cleanThreshold = 0.1f; // The threshold below which we consider the surface clean
 
     private void Awake()
     {
@@ -33,23 +34,36 @@ public class DirtySurfaceBehavior : MonoBehaviour
     public float CleanDirtSomeAmount(float cleanAmount)
     {
         float currentDirtiness = dirtiness;
-        float sizeFactor = GetSizeFactor();
+        float sizeFactor = GetSizePenalty();
         float effectiveCleanAmount = cleanAmount * sizeFactor;
         float newDirtiness = Mathf.Clamp(currentDirtiness - effectiveCleanAmount, 0f, 1f);
         mat.SetFloat("_Dirtiness", newDirtiness);
         dirtiness = newDirtiness;
 
+        if (dirtiness < cleanThreshold)
+        {
+            dirtiness = 0f;
+            mat.SetFloat("_Dirtiness", 0f);
+        }
+
         if (manager != null)
         {
             manager.OnSurfaceCleaned(effectiveCleanAmount);
         }
-        print($"Went from {cleanAmount} to {effectiveCleanAmount} dirt from surface.");
+        // print($"Went from {cleanAmount} to {effectiveCleanAmount} dirt from surface.");
         return effectiveCleanAmount; // Return the actual amount cleaned
     }
     public float GetSizeFactor()
     {
-        // formula: half of magnitude of size of the bounding box of the renderer
-        return 1f;
-        // return rend.bounds.size.magnitude / 2f;
+        return Mathf.Log10(rend.bounds.size.magnitude);
+    }
+    public float GetSizePenalty()
+    {
+        return 1f / GetSizeFactor();
+    }
+
+    public bool IsDirty()
+    {
+        return dirtiness > cleanThreshold;
     }
 }

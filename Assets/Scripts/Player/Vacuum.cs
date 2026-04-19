@@ -33,7 +33,7 @@ namespace Assets.Scripts.Player
             if (Physics.Raycast(transform.position, direction, out RaycastHit hit, raycastRange))
             {
                 DirtySurfaceBehavior dirtySurface = hit.collider.GetComponentInParent<DirtySurfaceBehavior>();
-                if (dirtySurface != null)
+                if (dirtySurface != null && dirtySurface.IsDirty())
                 {
                     Vector3 pullDirection = (hit.point - transform.position).normalized;
                     rb.linearVelocity = pullDirection * pullStrength;
