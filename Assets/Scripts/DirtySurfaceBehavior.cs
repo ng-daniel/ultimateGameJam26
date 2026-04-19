@@ -5,6 +5,7 @@ public class DirtySurfaceBehavior : MonoBehaviour
     DirtyRoomManager manager;
     Renderer rend;
     Material mat;
+    float dirtiness;
 
     private void Awake()
     {
@@ -21,31 +22,34 @@ public class DirtySurfaceBehavior : MonoBehaviour
 
     public void SetDirtiness(float value)
     {
-        mat.SetFloat("_Dirtiness", Mathf.Clamp(value, 0f, 1f));
+        dirtiness = Mathf.Clamp(value, 0f, 1f);
+        mat.SetFloat("_Dirtiness", dirtiness);
     }
 
     /// <summary>
     /// Reduces the dirtiness of the surface by the cleanAmount modified by the size of the object being cleaned.
     /// </summary>
     /// <returns>The actual amount of dirt cleaned</returns>
-    public float CleanProportionalToScale(float cleanAmount)
+    public float CleanDirtSomeAmount(float cleanAmount)
     {
-        float currentDirtiness = mat.GetFloat("_Dirtiness");
+        float currentDirtiness = dirtiness;
         float sizeFactor = GetSizeFactor();
         float effectiveCleanAmount = cleanAmount * sizeFactor;
         float newDirtiness = Mathf.Clamp(currentDirtiness - effectiveCleanAmount, 0f, 1f);
         mat.SetFloat("_Dirtiness", newDirtiness);
+        dirtiness = newDirtiness;
 
         if (manager != null)
         {
-            manager.OnSurfaceCleaned(currentDirtiness - newDirtiness);
+            manager.OnSurfaceCleaned(effectiveCleanAmount);
         }
-
-        return currentDirtiness - newDirtiness; // Return the actual amount cleaned
+        print($"Went from {cleanAmount} to {effectiveCleanAmount} dirt from surface.");
+        return effectiveCleanAmount; // Return the actual amount cleaned
     }
     public float GetSizeFactor()
     {
         // formula: half of magnitude of size of the bounding box of the renderer
-        return rend.bounds.size.magnitude / 2f;
+        return 1f;
+        // return rend.bounds.size.magnitude / 2f;
     }
 }

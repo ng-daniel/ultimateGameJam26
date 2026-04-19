@@ -7,6 +7,7 @@ namespace Assets.Scripts.Player
         Rigidbody rb;
         [SerializeField] float raycastRange = 2f;
         [SerializeField] float pullStrength = 10f;
+        [SerializeField] float cleanAmount = 1.5f;
 
         private void Awake()
         {
@@ -36,6 +37,7 @@ namespace Assets.Scripts.Player
                 {
                     Vector3 pullDirection = (hit.point - transform.position).normalized;
                     rb.linearVelocity = pullDirection * pullStrength;
+                    dirtySurface.CleanDirtSomeAmount(cleanAmount * Time.deltaTime);
                     return true;
                 }
             }
