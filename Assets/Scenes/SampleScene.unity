@@ -454,18 +454,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5452733635317100, guid: 63d152ebe28337049a9ca99ff1cdfcc4, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452733635317100, guid: 63d152ebe28337049a9ca99ff1cdfcc4, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452733635317100, guid: 63d152ebe28337049a9ca99ff1cdfcc4, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452733635317100, guid: 63d152ebe28337049a9ca99ff1cdfcc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.14
       objectReference: {fileID: 0}
@@ -528,7 +516,7 @@ GameObject:
   - component: {fileID: 2011072846}
   - component: {fileID: 2011072850}
   m_Layer: 6
-  m_Name: Plane
+  m_Name: Surface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -640,7 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0927695c0be7a6c4c85f3b2e41f10c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DirtySurfaceBehavior
-  maxDirtiness: 10
+  textureSize: 1024
 --- !u!1001 &2109907079
 PrefabInstance:
   m_ObjectHideFlags: 0

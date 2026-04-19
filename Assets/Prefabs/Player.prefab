@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3435354712027375873}
   - component: {fileID: 6257144085792371524}
   - component: {fileID: 5651871614016333847}
+  - component: {fileID: 1581808735855636653}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -34,7 +35,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -199,3 +200,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumpBehavior
   jumpStats: {fileID: 11400000, guid: bb3fcbdba3b87df4882600389abb8af5, type: 2}
   flySpeed: 25
+--- !u!114 &1581808735855636653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8847373846313990385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c293f4f01d3cb547b73df0da6e75b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Painter
+  color: {r: 0, g: 0, b: 0, a: 1}
+  spreadRadius: 0.1
+  range: 10
