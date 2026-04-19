@@ -9,6 +9,7 @@ namespace Assets.Scripts.Player
         [SerializeField] float explosionForce = 700f;
         [SerializeField] float cleanAmount = 0.5f;
         [SerializeField] float fuseTime = 0.5f;
+        [SerializeField] GameObject explosionEffectPrefab;
 
         public void Awake()
         {
@@ -48,6 +49,10 @@ namespace Assets.Scripts.Player
                 }
             }
             // Optionally, you could add visual and sound effects here for the explosion.
+            if (explosionEffectPrefab != null)
+            {
+                Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
+            }
             Destroy(gameObject); // Destroy the grenade after exploding
         }
     }
