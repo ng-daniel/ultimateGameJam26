@@ -34,7 +34,7 @@ namespace Assets.Scripts.Player
         /// <param name="moveStats">The movement stats to use for this movement.</param>
         /// <param name="isGrounded">Indicates whether the player is grounded.</param>
         void Move(Vector2 rawInput, MovementStats moveStats, bool isGrounded = true)
-        {   
+        {
             const float inputThreshold = 0.01f;
             float dt = Time.fixedDeltaTime;
 
@@ -56,16 +56,27 @@ namespace Assets.Scripts.Player
 
             float acceleration = moveStats.WalkSpeedAccel;
             float deceleration = moveStats.WalkSpeedAccel * 1.35f;
+            float directionChangeBoost = 2.0f;
+
             if (!isGrounded)
             {
                 acceleration *= moveStats.AirborneAccelMultiplier;
-                deceleration = 0f; // No deceleration in the air, only acceleration towards the input direction
-            }
-            float directionChangeBoost = 2.0f;
 
-            if (!hasInput)
+                if (hasInput)
+                {
+                    currentHorizontalVelocity = ApplyAirSteering(
+                        currentHorizontalVelocity,
+                        worldInputDir,
+                        moveStats.WalkSpeed,
+                        acceleration,
+                        dt,
+                        inputThreshold
+                    );
+                }
+            }
+            else if (!hasInput)
             {
-                // Decelerate to a stop when there is no input
+                // Decelerate to a stop when there is no input on the ground.
                 currentHorizontalVelocity = Vector2.MoveTowards(
                     currentHorizontalVelocity,
                     Vector2.zero,
@@ -74,7 +85,7 @@ namespace Assets.Scripts.Player
             }
             else
             {
-                // Apply a boost to acceleration when changing direction sharply
+                // Apply a boost to acceleration when changing direction sharply.
                 float turnMultiplier = 1f;
                 if (Mathf.Abs(currentHorizontalVelocity.x) > inputThreshold ||
                     Mathf.Abs(currentHorizontalVelocity.y) > inputThreshold)
@@ -87,7 +98,6 @@ namespace Assets.Scripts.Player
                     }
                 }
 
-                // Move towards the target velocity with the calculated acceleration
                 currentHorizontalVelocity = Vector2.MoveTowards(
                     currentHorizontalVelocity,
                     targetHorizontalVelocity,
@@ -96,6 +106,48 @@ namespace Assets.Scripts.Player
             }
 
             rb.linearVelocity = new Vector3(currentHorizontalVelocity.x, rb.linearVelocity.y, currentHorizontalVelocity.y);
+        }
+
+        /// <summary>
+        /// Applies steering to the player's velocity while airborne, allowing for smoother direction changes.
+        /// Does this by calculating a desired direction based on input and gradually rotating the current velocity 
+        /// towards it, while also allowing for acceleration up to the target speed.
+        /// </summary>
+        Vector2 ApplyAirSteering(
+            Vector2 currentHorizontalVelocity,
+            Vector2 worldInputDir,
+            float targetSpeed,
+            float acceleration,
+            float dt,
+            float inputThreshold)
+        {
+            if (currentHorizontalVelocity.sqrMagnitude <= inputThreshold * inputThreshold)
+            {
+                return Vector2.MoveTowards(
+                    currentHorizontalVelocity,
+                    worldInputDir * targetSpeed,
+                    acceleration * dt
+                );
+            }
+
+            float currentSpeed = currentHorizontalVelocity.magnitude;
+            Vector3 currentDirection = new Vector3(currentHorizontalVelocity.x, 0f, currentHorizontalVelocity.y).normalized;
+            Vector3 desiredDirection = new Vector3(worldInputDir.x, 0f, worldInputDir.y).normalized;
+
+            float maxTurnRadians = acceleration * dt / Mathf.Max(currentSpeed, 0.01f);
+            Vector3 steeredDirection = Vector3.RotateTowards(currentDirection, desiredDirection, maxTurnRadians, 0f);
+            Vector2 steeredVelocity = new Vector2(steeredDirection.x, steeredDirection.z) * currentSpeed;
+
+            if (currentSpeed < targetSpeed)
+            {
+                steeredVelocity = Vector2.MoveTowards(
+                    steeredVelocity,
+                    worldInputDir * targetSpeed,
+                    acceleration * dt
+                );
+            }
+
+            return steeredVelocity;
         }
     }
 }
