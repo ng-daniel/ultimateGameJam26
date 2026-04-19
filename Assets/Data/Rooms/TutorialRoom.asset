@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05b18573a9c749546842d8c893d09a10, type: 3}
-  m_Name: PlayerMoveStats
-  m_EditorClassIdentifier: Assembly-CSharp::MovementStats
-  WalkSpeed: 5
-  WalkSpeedAccel: 75
-  AirborneAccelMultiplier: 0.3
+  m_Script: {fileID: 11500000, guid: 79a7d90a723f464469d54a742c15d3c2, type: 3}
+  m_Name: TutorialRoom
+  m_EditorClassIdentifier: Assembly-CSharp::RoomConfig
+  Name: Tutorial
+  Prefab: {fileID: 1021834506359343318, guid: de23a1f262d8c3a4986e255c19021f92, type: 3}

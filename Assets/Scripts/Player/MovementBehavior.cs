@@ -50,6 +50,7 @@ namespace Assets.Scripts.Player
             right.Normalize();
             Vector3 worldDir = right * inputDir.x + forward * inputDir.y;
             Vector2 worldInputDir = hasInput ? new Vector2(worldDir.x, worldDir.z) : Vector2.zero;
+            bool isDirectlyBackwardInput = hasInput && inputDir.y < -0.95f && Mathf.Abs(inputDir.x) < 0.1f;
 
             Vector2 currentHorizontalVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.z);
             Vector2 targetHorizontalVelocity = worldInputDir * moveStats.WalkSpeed;
@@ -64,14 +65,20 @@ namespace Assets.Scripts.Player
 
                 if (hasInput)
                 {
-                    currentHorizontalVelocity = ApplyAirSteering(
-                        currentHorizontalVelocity,
-                        worldInputDir,
-                        moveStats.WalkSpeed,
-                        acceleration,
-                        dt,
-                        inputThreshold
-                    );
+                    currentHorizontalVelocity = isDirectlyBackwardInput
+                        ? Vector2.MoveTowards(
+                            currentHorizontalVelocity,
+                            targetHorizontalVelocity,
+                            acceleration * dt
+                        )
+                        : ApplyAirSteering(
+                            currentHorizontalVelocity,
+                            worldInputDir,
+                            moveStats.WalkSpeed,
+                            acceleration,
+                            dt,
+                            inputThreshold
+                        );
                 }
             }
             else if (!hasInput)

@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Player.Grenade
   explosionRadius: 5
-  explosionForce: 700
+  explosionForce: 500
   cleanAmount: 0.1
   fuseTime: 0.5
   explosionEffectPrefab: {fileID: 4805605510784967366, guid: 6343f4f8f89e65f49bbf9e222ca91832, type: 3}
