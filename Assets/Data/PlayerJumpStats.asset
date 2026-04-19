@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac57683bab3b75540a74e3768b6282cb, type: 3}
   m_Name: PlayerJumpStats
   m_EditorClassIdentifier: Assembly-CSharp::JumpStats
-  JumpImpulse: 6
-  distanceToGroundCheck: 0.7
-  groundCheckRadius: 0.5
+  JumpImpulse: 7
+  distanceToGroundCheck: 0.8
+  groundCheckRadius: 0.4
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
