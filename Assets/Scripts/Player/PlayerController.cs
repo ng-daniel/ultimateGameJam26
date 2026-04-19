@@ -34,6 +34,7 @@ namespace Assets.Scripts.Player
         JumpBehavior jumpBehavior;
         Vacuum vacuumBehavior;
         FPSCameraBehavior fpsCameraBehavior;
+        GrenadeThrower grenadeThrower;
         bool debugMode = false;
 
         void Awake()
@@ -45,6 +46,7 @@ namespace Assets.Scripts.Player
             movementBehavior = GetComponent<MovementBehavior>();
             jumpBehavior = GetComponent<JumpBehavior>();
             vacuumBehavior = GetComponent<Vacuum>();
+            grenadeThrower = GetComponent<GrenadeThrower>();
             fpsCameraBehavior = FindFirstObjectByType<FPSCameraBehavior>();
         }
 
@@ -130,15 +132,25 @@ namespace Assets.Scripts.Player
             vacuumBehavior.TrySuckDirtySurface(actionRotation);
         }
 
+        public void TryReleaseVacuumPrimary()
+        {
+            if (vacuumBehavior == null)
+            {
+                return;
+            }
+
+            vacuumBehavior.OnVacuumRelease();
+        }
+
         public void TryGrenadeSecondary()
         {
-            // if (vacuumBehavior == null)
-            // {
-            //     return;
-            // }
+            if (grenadeThrower == null)
+            {
+                return;
+            }
 
-            // Quaternion actionRotation = fpsCameraBehavior != null ? fpsCameraBehavior.transform.rotation : transform.rotation;
-            // vacuumBehavior.TrySuckDirtySurface(actionRotation);
+            Quaternion actionRotation = lookBehavior.GetLastLookRotation();
+            grenadeThrower.ThrowGrenade(actionRotation);
         }
 
         public void ToggleDebugMode()

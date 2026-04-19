@@ -43,12 +43,14 @@ namespace Assets.Scripts.Player
         {
             jumpAction.started += OnJumpStart;
             interactAction.started += OnInteractStart;
+            lmbAction.canceled += OnLeftClickRelease;
             rmbAction.started += OnRightClick;
         }
         void OnDisable()
         {
             jumpAction.started -= OnJumpStart;
             interactAction.started -= OnInteractStart;
+            lmbAction.canceled -= OnLeftClickRelease;
             rmbAction.started -= OnRightClick;
         }
 
@@ -111,6 +113,15 @@ namespace Assets.Scripts.Player
         {
             playerController.ToggleDebugMode();
         }
+
+        void OnLeftClickRelease(InputAction.CallbackContext context)
+        {
+            if (playerController != null)
+            {
+                playerController.TryReleaseVacuumPrimary();
+            }
+        }
+
         void OnRightClick(InputAction.CallbackContext context)        
         {
             if (playerController != null)

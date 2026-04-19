@@ -5,9 +5,12 @@ namespace Assets.Scripts.Player
     public class Vacuum : MonoBehaviour
     {
         Rigidbody rb;
-        [SerializeField] float raycastRange = 2f;
-        [SerializeField] float pullStrength = 10f;
-        [SerializeField] float cleanAmount = 1.5f;
+        [SerializeField] float raycastRange;
+        [SerializeField] float pullStrength;
+        [SerializeField] float releasePushStrength;
+        [SerializeField] float cleanAmount;
+
+        bool sucking = false;
 
         private void Awake()
         {
@@ -38,11 +41,42 @@ namespace Assets.Scripts.Player
                     Vector3 pullDirection = (hit.point - transform.position).normalized;
                     rb.linearVelocity = pullDirection * pullStrength;
                     dirtySurface.CleanDirtSomeAmount(cleanAmount * Time.deltaTime);
+                    sucking = true;
                     return true;
                 }
+                else if (sucking == true && !dirtySurface.IsDirty())
+                {
+                    // give a little bonus push if we release while still latched on to a now-clean surface
+                    // to encourage the player to keep sucking until it's fully clean.
+                    OnVacuumRelease();
+                }
+            }
+            else
+            {
+                sucking = false;
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// On release, give a small burst of velocity in the direction the player is facing to simulate a "push" effect.
+        /// </summary>
+        public void OnVacuumRelease()
+        {
+            if (!sucking)
+            {
+                return;
+            }
+
+            if (rb == null)
+            {
+                rb = GetComponent<Rigidbody>();
+            }
+
+            sucking = false;
+            Vector3 pushDirection = transform.forward;
+            rb.AddForce(pushDirection * releasePushStrength, ForceMode.Impulse);
         }
     }
 }
