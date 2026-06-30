@@ -12,10 +12,12 @@ namespace Assets.Scripts.Player
         Vector2 rotation;
         [SerializeField] float lookSensitivity = 0.25f;
         Quaternion lastLookRotation;
+        Quaternion initialRotation;
 
         public void Start()
         {
-            rotation = Vector2.zero;           
+            rotation = Vector2.zero;
+            initialRotation = transform.rotation;
         }
 
         public Quaternion LookToQuaternion(Vector2 lookInput)
@@ -28,13 +30,27 @@ namespace Assets.Scripts.Player
             Quaternion xRotation = Quaternion.Euler(0f, rotation.x, 0f);
             Quaternion yRotation = Quaternion.Euler(-rotation.y, 0f, 0f);
             Quaternion result = xRotation * yRotation;
-            lastLookRotation = result;
-            return result;
+            
+            lastLookRotation = initialRotation * result; // combine with initial rotation to maintain the original orientation
+            return lastLookRotation;
         }
 
         public Quaternion GetLastLookRotation()
         {
             return lastLookRotation;
+        }
+
+        public void SetInitialLook(Transform target)
+        {
+            if (target != null)
+            {
+                transform.rotation = target.rotation;
+                initialRotation = target.rotation;
+            }
+            else
+            {
+                Debug.LogError("Target transform is null in SetInitialLook.");
+            }
         }
     }
 }

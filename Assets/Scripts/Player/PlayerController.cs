@@ -29,7 +29,7 @@ namespace Assets.Scripts.Player
         Rigidbody rb;
         Collider col;
         
-        LookBehavior lookBehavior;
+        public LookBehavior lookBehavior;
         MovementBehavior movementBehavior;
         JumpBehavior jumpBehavior;
         Vacuum vacuumBehavior;
