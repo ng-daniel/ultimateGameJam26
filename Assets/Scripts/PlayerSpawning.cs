@@ -1,4 +1,5 @@
 using UnityEngine;
+using Assets.Scripts.Player;
 
 public class PlayerSpawning : MonoBehaviour
 {
@@ -19,7 +20,8 @@ public class PlayerSpawning : MonoBehaviour
     {
         if (playerPrefab != null && spawnPoint != null)
         {
-            playerInstance = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
+            playerInstance = Instantiate(playerPrefab);
+            ResetPlayer(playerInstance);
         }
         else
         {
@@ -38,6 +40,8 @@ public class PlayerSpawning : MonoBehaviour
             }
             player.transform.position = spawnPoint.position;
             player.transform.rotation = spawnPoint.rotation;
+            PlayerController playerController = player.GetComponent<PlayerController>();
+            playerController.lookBehavior.SetInitialLook(player.transform);
         }
         else
         {
